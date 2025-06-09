@@ -26,21 +26,20 @@ simple_df = data.frame(id = c("AAA", "BBB", "CCC", "DDD", "EEE"),
 simple_df
 ```
 
-Create a new column, named `sum_measurements`, via `mutate` or `$`, which is the sum of `measurement1`, `measurement2`, and `measurement3` columns.
+Create a new column, named `sum_measurements`, via `mutate`, which is the sum of `measurement1`, `measurement2`, and `measurement3` columns.
 
 ```{r}
 
 
 ```
 
-Filter simple_df to samples that have "case" in `case_control` column, and look at the **mean** of the `sum_measurements` column. Do the same for samples that have the "control" in `case_control` column. How do they compare?
+Filter `simple_df` to samples that have "case" in `case_control` column, and look at the **mean** of the `sum_measurements` column. Do the same for samples that have the "control" in `case_control` column. How do they compare?
 
 ```{r}
 
-
 ```
 
-Let's return back to the `metadata` dataframe. Here is a custom function `medicaid_eligible()` that takes a numeric vector `age` and makes some transformations: it returns 0 if `age` is less than 65 and 1 if `age` is equal or greater than 65. You don't need to understand how the function is defined, but you should understand the example usages of the `medicaid_eligible()` function on a numeric vector.
+Let's return back to the `metadata` dataframe. Here is a custom function `medicaid_eligible()` that takes a numeric vector as input and makes some transformations: it returns 0 if the input is less than 65 and 1 if the input is equal or greater than 65. You don't need to understand how the function is defined, but you should understand the example usages of the `medicaid_eligible()` function on a numeric vector.
 
 ```{r}
 medicaid_eligible = function(age) {
@@ -56,7 +55,7 @@ my_family_ages = c(3, 64, 32, 35, 76)
 medicaid_eligible(my_family_ages)
 ```
 
-Create a new column named `medicaid` that is the output of the `medicaid_eligible` function with input argument of the `Age` column.
+Use `medicaid_eligible` function on the `Age` column of `metadata`, and store the output as a new column in `metadata`.
 
 ```{r}
 
@@ -73,46 +72,38 @@ simple2_df = data.frame(id = c("AAA", "EEE", "FFF", "GGG", "HHH"),
 
 ```
 
-We want to join `simple_df` and `simple2_df` together using a common identifier column `id`. The function `full_join()` will keeps all observations common to both dataframes based on the common column defined via the `by` argument via a character.
+We want to join `simple_df` and `simple2_df` together using a common identifier column `id`. The function `full_join()` will keeps all observations common to both dataframes based on the common column defined via the `by` argument via a character. Try it out yourself, and use the `dim()` function to check the dimension of your Dataframes before and after:
 
 ```{r}
-dim(simple_df)
-dim(simple2_df)
-simple_joined_df = full_join(simple_df, simple2_df, by = "id")
-dim(simple_joined_df)
-simple_joined_df
+
 ```
 
-Notice that it is `by = "id"`, not `by = id` when referring to the `id` column common to both dataframes. In my opinion, this function's design was not great, as it runs against the form we are used to.
+Notice that it is `by = "id"`, not `by = id` when referring to the `id` column common to both Dataframes. In my opinion, this function's design was not great, as it runs against the form we are used to.
 
 We see `NA` in some of our data, because not every entry in `simple_df` is in `simple2_df`, and vice versa.
 
-There are other variations of `full_join():`
-
--   `full_join(x, y, by = "common_col")` keeps all observations.
-
--   `left_join(x, y, by = "common_col")` keeps all observations in `x`.
-
--   `right_join(x, y, by = "common_col")` keeps all observations in `y`.
-
--   `inner_join(x, y, by = "common_col")` keeps observations common to both `x` and `y`.
-
-Try some of the other join functions out yourself:
+Now, try using `inner_join()` instead - what happens?
 
 ```{r}
 
 ```
 
-Now, let's apply what we learned here to our genomics dataframes.
+Finally, let's apply what we learned here to our genomics dataframes.
 
-Using `full_join` twice, create a dataframe that has columns from `metadata`, `expression`, and `mutation`. You should use column `ModelID` that is common to all three dataframes as your identifier. How will you check your work to know that you did the join correctly?
+Using `full_join` twice, create a Dataframe that has columns from `metadata`, `expression`, and `mutation`. You should use column `ModelID` that is common to all three dataframes as your identifier:
+
+-   Merge two of the Dataframes of your choice together and store it as a temporary variable such as `temp`.
+
+-   Then, merge `temp` with the remaining Dataframe. Store the final dataframe as `analysis`.
+
+How will you check your work to know that you did the join correctly?
 
 ```{r}
 
 
 ```
 
-## Part 3: Pipes
+## Part 3: Pipes (Not required for badging)
 
 Often, in data analysis, we want to transform our dataframe in multiple steps via different functions. This leads to nested function calls, like this:
 
@@ -128,17 +119,17 @@ result = function3(function2(function1(dataframe)))
 
 To untangle this, you have to look into the middle of this code, and slowly step out of it.
 
-To make this more readable, programmers came up with an alternative syntax for function composition via the **pipe** metaphor. The ideas is that we push data through a chain of connected pipes, in which the output of a pipe becomes the input of the subsequent pipe.
+To make this more readable, programmers came up with an alternative syntax for function composition via the **pipe** operation. The ideas is that we push data through a chain of connected pipes, in which the output of a pipe becomes the input of the subsequent pipe.
 
 Instead of a syntax like `result = function3(function2(function1(dataframe)))`,
 
-we linearize it with the `%>%` symbol: `result2 = dataframe %>% function1 %>% function2 %>% function3`.
+we linearize it with the `|>` symbol: `result2 = dataframe |> function1 |> function2 |> function3`.
 
 In the previous example,
 
 ```{r}
-breast_metadata = metadata %>% 
-  filter(OncotreeLineage == "Breast") %>%
+breast_metadata = metadata |>
+  filter(OncotreeLineage == "Breast") |>
   select(ModelID, Age, Sex) 
  
 ```
@@ -156,7 +147,7 @@ analysis = select(filter(metadata, Age > 18 & Age < 45), Age, OncotreeLineage, P
 
 ```
 
-Challenge!!! Make this 3-nested function call into the pipe format.
+Optional Challenge!!! Make this 3-nested function call into the pipe format.
 
 ```{r}
 analysis = mutate(select(filter(metadata, Age > 18 & Age < 45), Age, OncotreeLineage, PrimaryOrMetastasis), medicaid = medicaid_eligible(Age))
@@ -166,7 +157,7 @@ analysis = mutate(select(filter(metadata, Age > 18 & Age < 45), Age, OncotreeLin
 
 ```
 
-In the world of R data analysis, you will see some people analyzing their data using the `%>%` symbol, and some will just use nested functions. You should decide what you prefer, but just want you to be aware of people's styles.
+In the world of R data analysis, you will see some people analyzing their data using the `|>` (or equivalently, `|>`) symbol, and some will just use nested functions. You should decide what you prefer, but just want you to be aware of people's styles.
 
 ## Feedback!
 

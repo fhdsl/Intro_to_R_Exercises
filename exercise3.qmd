@@ -1,0 +1,196 @@
+# Week 3 Exercises
+
+If you need to clear your environment and start from the beginning, this code chunk will do that:
+
+```{r}
+rm(list = ls())
+```
+
+## Recap from class: subsetting vectors implicitly
+
+In class, we looked at a numerical vector similar to this:
+
+```{r}
+age = c(89, 70, 64, 99, 66, 71, 55, 60, 30, 16, 88, 23, 56)
+```
+
+Now, let's subset this vector **implicitly**, in 3 steps:
+
+1.  Come up with a criteria for subsetting: "I want to subset to values greater than 50".
+2.  We can use a **comparison operator** to create a **logical indexing vector** that fits this criteria.
+
+```{r}
+age > 50
+```
+
+3.  Use this logical indexing vector to subset.
+
+    ```{r}
+    age[age > 50]
+    ```
+
+And you are done.
+
+Alternatively:
+
+```{r}
+another_idx = age > 50
+age[another_idx]
+```
+
+On to practicing yourself!!
+
+## Part 1: Subsetting vectors implicitly (Required for Badging)
+
+Suppose we want to subset `age` implicitly: "We want to subset `age` to have values less than 21 *or* greater than 40".
+
+Create the logical indexing vector via compound comparison operations:
+
+```{r}
+age < 21 | age > 40
+```
+
+Then, your turn: use this logical indexing vector to subset:
+
+```{r}
+
+```
+
+Your turn completely on your own now: Can you subset for `age` greater than 65 *and* `age` less than 85? Use the comparison operator `&`.
+
+```{r}
+
+```
+
+Consider this character vector:
+
+```{r}
+subtypes = c("breast", "liver", "lung", "breast", "lung", "kidney", "brain", "liver", "skin", "lung", "brain", "breast")
+```
+
+Can you subset for `subtypes` that does not have "brain"? Remember the "not equal" comparison operator `!=`.
+
+```{r}
+
+```
+
+## Part 2: Subsetting dataframes (Required for Badging)
+
+```{r, message=F, warning=F}
+library(tidyverse)
+load(url("https://github.com/fhdsl/Intro_to_R/raw/main/classroom_data/CCLE.RData"))
+```
+
+Using `select()`, subset `expression` dataframe to keep only the following columns: `ModelID`, `KRAS_Exp`, `NRAS_Exp`, and `HRAS_Exp`. Store the result as a variable `expression_RAS`.
+
+```{r}
+expression_RAS = select(expression, ModelID, KRAS_Exp, NRAS_Exp, HRAS_Exp)
+
+```
+
+Then, using `filter()`, subset `expression_RAS` to keep rows that have `KRAS_Exp` values between 2 and 6.
+
+```{r}
+output = filter(expression_RAS, KRAS_Exp > 2 & KRAS_Exp < 6)
+```
+
+Now, formulate a new subsetting criteria for the `metadata` dataset: which rows would you filter for and columns would you select that relate to a scientific question?
+
+For instance: "I want to filter for rows such that the subtype is breast cancer, and select for columns age, sex, and the subtype."
+
+Your subsetting criteria:
+
+Then, use `filter()` and `select()` to subset your dataframe so that it address your scientific question.
+
+```{r}
+
+```
+
+## Part 3: Summary statistics (Not required for badging)
+
+**Summary statistics** summarizes a vector of information. For instance, if you have some numeric values,
+
+```{r}
+age = c(89, 70, 64, 99, 66, 71, 55, 60, 30, 16, 88, 23, 56)
+```
+
+The `mean()` function computes the mean of this vector:
+
+```{r}
+mean(age)
+```
+
+If there are missing values in the vector, calculating the mean will return `NA`:
+
+```{r}
+age_w_NA = c(89, NA, 70, 64, 99, 66, 71, 55, 60, 30, 16, 88, 23, NA, 56)
+mean(age_w_NA)
+```
+
+You need to add the option `na.rm=TRUE` to remove the missing value when computing the mean:
+
+```{r}
+mean(age_w_NA, na.rm=TRUE)
+```
+
+For character vectors, you can summarize the information by looking at the counts of each category using the `table()` function:
+
+```{r}
+lunch = c("sandwich", "sandwich", "soup", "soup", "soup", "salad", "sandwich", "soup")
+table(lunch)
+```
+
+Let's use summary satatistics on columns of a Dataframe.
+
+Let's take a short break from looking at cancer cell lines for the moment...and consider a Dataframe of penguin samples.
+
+Load the data in and take a look yourself:
+
+```{r, warnings=F, message=F}
+library(tidyverse)
+library(palmerpenguins)
+head(penguins)
+```
+
+Let's examine some summary statistics of this dataset: **pick a few columns of interest, and use summary statistics on the column via the following functions**:
+
+If the columns of interest are numeric, then you can try functions such as `mean()`, `median()`, `min()`, or `max()`.
+
+If the columns of interest is character or logical, then you can try the `table()` function.
+
+Within the column, if there are `NA` (a special value indicating "Not Available") elements present, some of these functions will return with a value of `NA`. To remove the `NA` value before computing, some of these function have a `na.rm` argument that you can set to `TRUE`.
+
+All of these functions take in a vector as input and *not* a dataframe, so you have to access the column as a vector via the `$` operation.
+
+```{r}
+mean(penguins$body_mass_g, na.rm=TRUE) #example
+
+#compute the summary statistics of a few columns below:
+table(penguins$island)
+```
+
+Then, **compare the mean body mass between the three penguin species** (Adelie, Chinstrap, Gentoo).
+
+In order to do so, you have to subset the `penguins` dataframe three times, so that each dataframe contains one of the three species (the code below subsets the first species for you). Then, you will analyze each species' dataframe separately using the `mean()` function. Do you see any difference of mean penguin mass across species?
+
+```{r}
+adelie = filter(penguins, species == "Adelie")
+mean(adelie$body_mass_g, na.rm=TRUE)
+
+#finish the analysis for Chinstrap and Gentoo subtypes:
+
+```
+
+## Feedback!
+
+How many hours did you spend on this exercise?
+
+```{r}
+time_spent = 0 
+```
+
+If you worked with other peers, write their names down in the following character vector: each element is one person's name.
+
+```{r}
+peers = c("myself")
+```

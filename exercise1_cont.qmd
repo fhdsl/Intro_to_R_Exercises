@@ -1,0 +1,100 @@
+---
+title: "Exercise 1 continued"
+format: html
+editor: visual
+---
+
+## Review: Defining and updating variables
+
+Here are three styles of defining and updating variables:
+
+1.  Hard-coding it
+
+```{r}
+chr1 = 2
+chr2 = 3
+chr3 = 1
+```
+
+2.  In terms of other variables (depends on the order of code run)
+
+```{r}
+chr_sum = chr1 + chr2 + chr3
+chr_sum
+```
+
+If you were to modify `chr1` to a different value, what do you need to do to make sure `chr_sum` is updated?
+
+3.  In terms of itself (depends especially on the order of code run)
+
+```{r}
+chr1 = chr1 * 2
+chr1
+```
+
+You clicked this block of code too many times, so you updated `chr1` too many times...how do you start over?
+
+## What is this expression?!
+
+As we start to look at new data types and data structures, we need to be more attentive to the functions and operations we use. Sometimes, we expect an operation or function to behave a certain way in terms of the inputs accepted and the outputs produced, but we get an unexpected result, or an error.
+
+Let's experiment around to see the all sort of things that can happen.
+
+**The + operation**
+
+We are familiar with expressions such as this:
+
+```{r}
+1 + 1
+```
+
+What happens if you add a numeric and a logical? What happens if you add a numeric and character? Logical and numeric? Try all sorts of combinations.
+
+```{r}
+TRUE + 2.3
+```
+
+```{r}
+TRUE + "hello"
+```
+
+Consider the following vectors:
+
+```{r}
+num_vec = c(1, 4, 5)
+num_vec_2 = c(-1, -4, 0)
+char_vec = c("hippos", "butterflies", "orcas")
+logical_vec = c(FALSE, FALSE, TRUE)
+```
+
+Try adding some of these vectors together. What happens?
+
+```{r}
+
+```
+
+**The `mean`** **function**
+
+The `mean` function takes in a numerical vector, and returns the average value. Try using it on `num_vec`, `num_vec_2`, `char_vec`, `logical_vec` and see what happens. What happens if you use it on a singular data type, such as numeric, logical, and character?
+
+```{r}
+
+```
+
+## Other review
+
+Create a numeric variable that is the sum of the second element of `num_vec` and third element of `num_vec_2`.
+
+```{r}
+
+```
+
+Take the last element of `num_vec` and double it.
+
+```{r}
+
+```
+
+```{r}
+chr1 = 2
+```

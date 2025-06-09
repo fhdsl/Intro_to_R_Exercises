@@ -1,10 +1,16 @@
-# KRAS Analysis Demo
+---
+title: "Week 5 Exercises"
+format: html
+editor: visual
+---
+
+# KRAS Analysis
 
 ## Motivation
 
 In the paper ["Tumor RAS Gene Expression Levels Are Influenced by the Mutational Status of RAS Genes and Both Upstream and Downstream RAS Pathway Genes"](https://journals.sagepub.com/doi/pdf/10.1177/1176935117711944), the authors studied relationship between RAS gene mutational status and messenger RNA expression. They saw higher levels of KRAS expression for samples that have KRAS mutation relative to samples without KRAS mutation for several cancer subtypes. The analysis was conducted using patient data from the [The Cancer Genome Atlas (TCGA)](https://www.cancer.gov/ccg/research/genome-sequencing/tcga) project, and *we are curious whether similar trends hold via cell line models.*
 
-![From the figure above, KRAS expression is elevated in KRAS-mutant samples from lung, pancreatic, and colon adenocarcinomas relative to WT samples.](https://raw.githubusercontent.com/fhdsl/S1_Intro_to_R/main/images/kras.png){alt="From the figure above, KRAS expression is elevated in KRAS-mutant samples from lung, pancreatic, and colon adenocarcinomas relative to WT samples." width="450"}
+![From the figure above, KRAS expression is elevated in KRAS-mutant samples from lung, pancreatic, and colon adenocarcinomas relative to WT samples.](https://raw.githubusercontent.com/fhdsl/S1_Intro_to_R/main/images/kras.png){width="450"}
 
 The cell line models we use is from the [Dependency Map Project](https://depmap.org/portal/home/) (DepMap), where over a thousand cancer cell lines were profiled for various genomic features, including mutational status and RNA expression. Below are the analysis code to re-create the analysis:
 
@@ -32,11 +38,11 @@ dim(mutation)
 knitr::kable(table(metadata$OncotreePrimaryDisease))
 ```
 
-### Filter rows for cancer subtype in metadata, then join datasets together
+### Filter rows for cancer subtype in `metadata`, then join datasets together
 
 ```{r}
-metadata_filtered = metadata %>% 
-  filter(OncotreePrimaryDisease == "Rhabdoid Cancer" | OncotreePrimaryDisease =="Colorectal Adenocarcinoma" | OncotreePrimaryDisease == "Pancreatic Adenocarcinoma")
+metadata_filtered = metadata |> 
+  filter(OncotreePrimaryDisease == "Non-Small Cell Lung Cancer" | OncotreePrimaryDisease == "Colorectal Adenocarcinoma" | OncotreePrimaryDisease == "Pancreatic Adenocarcinoma")
 
 analysis = full_join(metadata_filtered, expression, by = "ModelID")
 analysis = full_join(analysis, mutation, by = "ModelID") 
@@ -45,7 +51,24 @@ analysis = full_join(analysis, mutation, by = "ModelID")
 
 ### Create figure
 
+Okay, your turn now. Let's start creating a boxplot comparing `KRAS_Mut` on the X-axis against `KRAS_Exp` on the Y-axis:
+
 ```{r}
-ggplot(drop_na(analysis), aes(x = KRAS_Mut, y = KRAS_Exp)) + geom_boxplot() + facet_wrap(~OncotreePrimaryDisease) + theme_bw()
+ggplot(analysis) + aes(x = ___, y = ____) + geom_boxplot()
+```
+
+This is for all 3 subtypes combined. Let's separate them apart so that we can make comparisons between subtypes. There's two ways to do this:
+
+-   Use grouping in the boxplot by specifying `aes(x = ___, y = ___, fill = ___)`
+
+-   Use the `facet_wrap(~column)` to make subpltos. Replace `column` with your column of choice.
+
+```{r}
+
+```
+
+Make one more plot of your choice via the `analysis` Dataframe. You can look at other genes of interest...
+
+```{r}
 
 ```

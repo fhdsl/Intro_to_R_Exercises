@@ -1,0 +1,84 @@
+---
+title: "Exercise 2 continued"
+format: html
+editor: visual
+---
+
+If you need to clear your environment and start from the beginning, this code chunk will do that:
+
+```{r}
+rm(list = ls())
+```
+
+## The third way of subsetting
+
+Consider a vector like this:
+
+```{r}
+staff = c("chris", "amy", "anna", "scott")
+```
+
+To warm up, let's use our existing knowledge to subset for the 2nd and 3rd element of `staff`:
+
+```{r}
+
+```
+
+Here's our third way of subsetting that we will talk about in class today: Inside the subsetting bracket, we can have:
+
+3.  A **logical indexing vector** with the same length as the vector to be subsetted. The `TRUE` values indicate which elements to keep, the `FALSE` values indicate which elements to drop.
+
+Therefore, to do the same subsetting as we did before, we could do:
+
+```{r}
+staff[c(FALSE, TRUE, TRUE, FALSE)]
+```
+
+What's the benefit of this new method? Many operations and functions will return a logical indexing vector that helps you subset:
+
+Suppose we want to subset this vector to staff members that starts with "a". Here is a function `startsWith` that give you a logical indexing vector to do that:
+
+```{r}
+startsWith(staff, "a")
+```
+
+Use it to subset our vector `staff` (Hint: put the previous expression in the subsetting bracket):
+
+```{r}
+
+```
+
+If done correctly, the subset should be the same as your other subsetting results.
+
+## Subsetting missing values
+
+Load in data:
+
+```{r}
+library(tidyverse)
+load(url("https://github.com/fhdsl/Intro_to_R/raw/main/classroom_data/CCLE.RData"))
+```
+
+Examine the `Age` column in the `metadata` dataframe. Besides numerics, you should also see missing data coded as `NA`.
+
+```{r}
+metadata$Age
+```
+
+Use the `is.na()` function on the `Age` column (a numeric vector). The function returns logical indexing vector indicating whether an element is `NA` or not:
+
+```{r}
+is.na(metadata$Age)
+```
+
+Subset the `Age` column so that it only contains `NA` values:
+
+```{r}
+metadata$Age[is.na(metadata$Age)]
+```
+
+Subset the `Age` column so that it only contains numeric values. You will need to change any `TRUE` value in your logical indexing vector to `FALSE`, and change any `FALSE` to `TRUE`. You can do it by `!is.na()` :
+
+```{r}
+
+```

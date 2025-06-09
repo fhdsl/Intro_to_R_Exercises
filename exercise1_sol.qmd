@@ -1,0 +1,193 @@
+# W1 Exercises
+
+## Part 1: Defining variables (Required for badging)
+
+Here are the two data types we looked at in class this week.
+
+-   **Numeric**: Contains any numeric values, include decimals. For instance, `-123.2`.
+
+-   **Character**: Contains a series of letters and symbols, contained in a quote. For instance, `"hello!"`
+
+You will briefly look at this third data type today.
+
+-   **Logical**: Contains only `TRUE` or `FALSE` values. It can be equivalently represented by `T` or `F`.
+
+The code chunk below clears your environment if you want to start over. Alternatively, use the broom button on the top right corner.
+
+```{r}
+rm(list = ls())
+```
+
+Create variables `chr1` and `chr2` to both have values of 2. This represents the number of chromosome copies you have in a cell for chromosomes 1 and 2, respectively.
+
+```{r}
+chr1 = 2
+#your turn below for chr2
+
+```
+
+Notice that no output is shown when you assign variables to values! To see the value of each variable, you can call the variable to print out its value:
+
+```{r}
+chr1
+chr2
+```
+
+Use the function `class(x)` on one of variables by replacing `x` with `chr1` or `chr2`. The `class()` function is very useful to understand what data type your variable is.
+
+```{r}
+
+```
+
+Then, change the value of `chr1` to be 3, representing 3 chromosome copies for chromosome 1. Print it out to see that it makes sense to you.
+
+```{r}
+
+```
+
+### Defining variables in terms of other variables
+
+So far, you have been creating variables by "hard-coding" them: you give them a specific value. Let's see how you create variables in terms of other variables.
+
+Create variable `chr3` to be two times the amount of `chr1`. Print it out to see that it makes sense to you.
+
+```{r}
+
+```
+
+Create a variable `chrTotal` that is the sum of `chr1`, `chr2`, and `chr3`. Print it out to see that it makes sense to you.
+
+```{r}
+
+```
+
+Change the value of `chr1` to be a different value. Does the value of `chr3` and `chrTotal` change also?
+
+```{r}
+
+```
+
+Given the new value of `chr1`, what do you need to do so that `chr3` is twice the value of `chr1`, and `chrTotal` is the sum of `chr1`, `chr2`, and `chr3`? Just a thought exercise, no need to do anything.
+
+This illustrates the importance of *order* in running your code.
+
+## Part 2: Order of operations (Required for badging)
+
+Here is a complex-looking expression:
+
+```{r}
+sqrt(chr1 * abs(-chr2 + chr3)) + (nchar("chromosome") + 3)
+```
+
+Explain in words how the R Console parse out this expression to give the resulting value. The `sqrt(x)` function computes the square root of a number `x`, and `abs(x)` function computes the absolute value of a number `x`. Try `?sqrt` and `?abs` in the R console for more information.
+
+In your own words:
+
+Now, write a complex expression that uses `chr1`, `chr2`, and `chr3` in one line of code, and store the resulting value in a new variable of your own choice. Print it out to see its value. Think carefully about the order of operations or function you use and check that the R Console is interpreting it correctly.
+
+```{r}
+
+```
+
+Take what you just wrote above, and now add some parenthesizes to change the order of operation. Does the resulting value change as you expect?
+
+```{r}
+
+```
+
+## Part 3: Brief introduction to vectors (Not required for badging)
+
+Suppose you want to store information about the number of chromosome copies for chromosomes 1 to 22. Defining `chr4`, `chr5`, etc. seems repetitive. *A good rule of thumb in programming is Don't Repeat Yourself (DRY). If you do, find a way to automate it!*
+
+We have so far looked at **data types**, which so far includes **numeric** and **character**, and **logical**. Here, we introduce **data structures**, which store information about data types.
+
+The **vector** is a data structure that stores many elements of the *same data type*. Each *element* of a vector contains a single data type, and there is no limit on how big a vector can be, as long the memory use of it is within the computer's memory.
+
+To create a vector, we use the combine `c()` function to combine individual data type elements together:
+
+```{r}
+chrNum = c(2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2)
+chrNum
+```
+
+That was repetitive. Using DRY rule of thumb, we find a function to automate this:
+
+```{r}
+chrNum = rep(2, 22)
+chrNum
+```
+
+The function `length(x)` calculates the length of a vector `x`. Subsitute `x` with `chrNum` to see how long your vector is.
+
+```{r}
+
+```
+
+Now, we introduce a new operation: accessing elements of a vector using **brackets**. We will talk about this in much more detail - the point of the exercise is to get a taste of what is coming up next.
+
+If we want to access the 3rd element of this vector:
+
+```{r}
+chrNum[3]
+```
+
+You can also modify the element of a vector by assigning it a new value:
+
+```{r}
+chrNum[3] = 1
+```
+
+Modify `chrNum` so that the 21th element of `chrNum` is the sum of `chrNum[2]`, `chrNum[3]`, and `chrNum[4]`.
+
+```{r}
+
+```
+
+Last thing about vector for now: If we want to access *multiple* elements of `chrNum`, we first specify a numeric vector the elements we want to access. This is called the **indexing vector**. Then, we put the indexing vector within the brackets for `chrNum` to access it.
+
+If we want the 2nd and 4th elements:
+
+```{r}
+indexing = c(2, 4)
+chrNum[indexing]
+```
+
+Often, we do it without storing the indexing vector as a variable.
+
+```{r}
+chrNum[c(2, 4)]
+```
+
+Your turn: access the 10th and 11th elements of `chrNum` using an indexing vector:
+
+```{r}
+
+```
+
+Bonus: try the following: access chromosomes 1 to 10. Instead of writing out 1 to 10 for your indexing vector, use the sequence `seq()` function: try `seq(1, 10)` to create your indexing vector. You could also use the operation `1:10` instead of `seq()` as an alternative:
+
+```{r}
+
+```
+
+## You are done!
+
+Change the logical value of this variable to `TRUE`. That's all you need to know about **logicals** for now!
+
+```{r}
+finished_with_exercise1 = FALSE
+```
+
+## Feedback!
+
+How many hours did you spend on this exercise?
+
+```{r}
+time_spent = 0 
+```
+
+If you worked with other peers, write their names down in the following character vector: each element is one person's name.
+
+```{r}
+peers = c("Myself")
+```

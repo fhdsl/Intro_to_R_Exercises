@@ -1,0 +1,70 @@
+---
+title: "Exploring CO2 Emissions Over Time"
+format: html
+editor: visual
+---
+
+Clears the environment.
+
+```{r}
+rm(list = ls())
+```
+
+## Introduction
+
+This data analysis project is based on [Open Case Studies on Exploring CO2 Emissions Over Time](https://www.opencasestudies.org/ocs-bp-co2-emissions/). This case study explores how different countries have contributed to Carbon Dioxide (CO2) emissions over time.
+
+Load the packages and data in.
+
+```{r, warning=F, message=F}
+library(OCSdata)
+library(tidyverse)
+library(esquisse)
+library(readxl)
+CO2_emissions = read_xlsx("OCS_data/data/raw/yearly_co2_emissions_1000_tonnes.xlsx")
+```
+
+Clean up the data (this uses functions outside of the scope of this class, no need to worry.)
+
+```{r}
+CO2_emissions =  pivot_longer(CO2_emissions, cols = -country, names_to = "Year", values_to = "Emissions")
+CO2_emissions$Year = as.numeric(CO2_emissions$Year)
+```
+
+Take a look at the data:
+
+```{r}
+View(CO2_emissions)
+```
+
+Subset the data via `filter()` so that the column `country` contains only "United States" and stores it as a new variable `US_emissions`.
+
+```{r}
+
+```
+
+Make a plot to show how the CO2 emission of United States changed over time. You might want to consider `geom_point()` or `geom_line()`.
+
+```{r}
+ggplot(US_emissions) + aes(x = ___, y = ___) + geom_point()
+#or
+ggplot(US_emissions) + aes(x = ___, y = ___) + geom_line()
+```
+
+Open ended question: Compare CO2 emissions of United States with other countries. This can be done via data visualization, or descriptive statistics. Some ideas that could be helpful for your analysis, in level of difficulty. You can do whatever feels best for you.
+
+-   Comparing between two countries: You can subset to another country and make a comparison between United States and that country, via creating a plot for each country, or summary statistics for each country.
+
+-   Comparing between multiple countries:
+
+    -   You can analyze all countries (no need to subset), or you can subset to several countries at once:
+
+        -   Remember that if you want to subset for multiple countries at once, you can use multiple comparison via the syntax: `filter(CO2_emissions, country == "country1" | country == "country2" | country == "country3")`
+
+    -   Then try to make a line plot `geom_point()` grouped by country via `aes(x = ___, y = ___, group = ___)`, or use `facet_wrap(~country)` to make subplots by country.
+
+-   Use `group_by()` and `summarise()` to calculate summary statistics across countries.
+
+```{r}
+
+```

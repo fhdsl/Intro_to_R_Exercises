@@ -1,0 +1,235 @@
+# W2 Exercises
+
+If you need to clear your environment and start from the beginning, this code chunk will do that:
+
+```{r}
+rm(list = ls())
+```
+
+## Part 1: Subsetting vectors (Required for badging)
+
+During class this week, we would subset a vector `age` like this:
+
+```{r}
+age = c(89, 70, 64, 99, 66, 71, 55, 60, 30, 16)
+
+age[c(1, 2, 3)]
+```
+
+which prints out the value of the subset.
+
+Now, in the exercise this week, try storing the subsetted vector as a different variable, such as:
+
+```{r}
+age_firstThree = age[c(1, 2, 3)]
+```
+
+You can print out this variable:
+
+```{r}
+age_firstThree
+```
+
+**Your turn:** Subset for the 1st, 3rd and 5th elements of `age` vector, and store this subsetted vector as the variable `age_sub`. Check the value of `age_sub` to make sure you did the subsetting correctly.
+
+```{r}
+
+
+```
+
+Then, subset for the first 5 elements of `age` vector and store it as the variable `age_five`. Hint: consider the trick `1:5` to generate a sequence. Check the value of `age_five` to make sure you did the subsetting correctly.
+
+```{r}
+
+```
+
+Another use of subsetting is to modify part of a vector. Instead of having the bracket `[ ]` notation on the *right* hand side of the equation, if it is on the *left* hand side of the equation, then we can modify a subset of the vector. Let's see an example:
+
+```{r}
+age[c(1, 3)] = c(35, 40)
+age
+```
+
+Your turn: modify a subset of `age` (you decide which elements you want to subset for) to new values of choice:
+
+```{r}
+
+```
+
+## Part 2: Dataframes (Required for badging)
+
+Let's load in a few Dataframes: we will work with `metadata` and `expression` dataframes.
+
+```{r, message=F, warning=F}
+library(tidyverse)
+load(url("https://github.com/fhdsl/Intro_to_R/raw/main/classroom_data/CCLE.RData"))
+```
+
+(you can ignore all the messages this code chunk prints out.)
+
+We just started to explore `metadata` together in class. We also now have `expression` dataframe loaded. Use our exploratory functions to investigate the basic properties of `metadata` and `expression` Dataframes, such as the following:
+
+-   `View(metadata)`, `View(expression)`
+
+-   `head(metadata)`, `head(expression)`
+
+-   `dim(metadata)`, `dim(expression)`
+
+-   `names(metadata)`, `dim(expression)`
+
+Your investigation for `metadata`:
+
+```{r}
+
+```
+
+Your investigation for `expression`:
+
+```{r}
+
+```
+
+Besides looking at just the numbers, you should start to formulate an interpretation of these Dataframes, such as what do the rows represent, what do the columns represent? We will talk about this together in class next week.
+
+**Let's practice subsetting on Dataframes:**
+
+Subset for the column "KRAS_Exp" in `expression` using the `$` operation. Store it as a variable called `KRAS`.
+
+```{r}
+
+```
+
+Now, `KRAS` is just a vector, which means the rules of vector apply to this variable. Further subset `KRAS` as a vector in a way of your choice. You can store the subsetted `KRAS` vector as a variable, or just output it.
+
+```{r}
+
+```
+
+Subset for the first 20 rows of `expression` and the first 5 columns of `expression` and store it as `expression_small`. `expression_small` should still be a dataframe.
+
+```{r}
+
+```
+
+Subset for the first 20 rows of `expression` *and* the columns "KRAS_Exp", "HRAS_Exp", "NRAS_Exp", and store it as `expression_subset`. Hint: You can refer the column names via the character vector `c("KRAS_Exp", "HRAS_Exp", "NRAS_Exp")` within the brackets.
+
+```{r}
+
+```
+
+## Part 3: Comparison operators on data types (**Not** required for badging)
+
+Here are the comparison operators:
+
+`<` less than
+
+`<=` less or equal than
+
+`==` equal to
+
+`!=` not equal to
+
+`>` greater than
+
+`>=` greater than or equal to
+
+Consider the following variables:
+
+```{r}
+chr1 = 2
+chr2 = 3
+chr3 = 1
+staff1 = "chris"
+staff2 = "sonu"
+```
+
+Using comparison operators, write 3 expressions so that the returned value is `TRUE`. I'll give one example:
+
+```{r}
+staff1 != "sean"
+
+
+```
+
+Using comparison operators, write 3 expressions so that the returned value is `FALSE`:
+
+```{r}
+chr1 > 2
+
+
+```
+
+We can combine comparison operators together to form more complex statements:
+
+The "and" `&` operator returns `TRUE` if both inputs have values of `TRUE`. Otherwise it return `FALSE`.
+
+```{r}
+a = TRUE
+b = TRUE
+c = FALSE
+d = FALSE
+a & b
+c & d
+a & c
+b & d
+```
+
+Therefore, we can create compound comparison operations like this: `chr1 > 0` is `TRUE`, `chr1 < 3` is `TRUE`, so when you put it together with `&`, it evaluates to...
+
+```{r}
+chr1 > 0 & chr1 < 3
+```
+
+You turn: write a compound comparison operation using `&` to check that `staff1` is "chris" *and* `staff2` is "sonu":
+
+```{r}
+
+
+```
+
+Similarly, the "or" `|` operator returns `TRUE` if *at least one* of the inputs are `TRUE`. Otherwise it returns `FALSE`.
+
+```{r}
+a = TRUE
+b = TRUE
+c = FALSE
+d = FALSE
+a | b
+c | d
+a | c
+b | d
+```
+
+Your turn: Create a compound comparison operations using `|` to check that `child_age` is less than 18 *or* `child_age` is greater than 65:
+
+```{r}
+child_age = 4
+#your code below:
+
+```
+
+**Now, let's use comparison operators on vectors.**
+
+```{r}
+age = c(89, 70, 64, 99, 66, 71, 55, 60, 30, 16)
+```
+
+Create a compound comparison operation to see if the elements of `age` are greater than 18 *and* `age` is less than 65.
+
+```{r}
+
+```
+
+## Feedback!
+
+How many hours did you spend on this exercise?
+
+```{r}
+time_spent = 0 
+```
+
+If you worked with other peers, write their names down in the following character vector: each element is one person's name.
+
+```{r}
+peers = c("myself")
+```
